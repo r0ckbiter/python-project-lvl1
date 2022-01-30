@@ -1,57 +1,57 @@
 #!/usr/bin/env python
 
 import prompt
-import operator
 from random import randint
-from random import choice
 
 
 print("Welcome to the Brain Games!")
 
 
-def get_name():
+def name():
     name = prompt.string('May I have your name? ')
     return name
 
 
-name = get_name()
+name = name()
 
 
-opr = {
-    "+": operator.add,
-    "-": operator.sub,
-    "*": operator.mul,
-}
+def random_num():
+    number = randint(1, 25)
+    return number
 
 
-def calc():
+def wrong():
+    return print(f"'yes' is wrong answer ;(. Correct answer was 'no'."
+                 f"\nLet's try again, {name.title()}!")
+
+
+def is_even():
     score = 0
     while score < 3:
-        number1 = randint(5, 10)
-        number2 = randint(1, 5)
-        x = opr.keys()
-        x = list(x)
-        operator = choice(x)
-        print(f"Question: {number1} {operator} {number2}")
-        result = opr.get(operator)
-        answer = prompt.integer('Your answer: ')
-        correct_answer = (result(number1, number2))
-        if answer == correct_answer:
+        num = random_num()
+        print(f'Question: {num}')
+        answr = prompt.string('Your answer: ')
+        if answr == 'yes' and num % 2 == 0:
             print('Correct!')
             score += 1
+        elif answr == 'no' and num % 2 != 0:
+            print('Correct!')
+            score += 1
+        elif answr == 'yes' and num % 2 != 0 or answr == 'no' and num % 2 == 0:
+            wrong()
+            score == 0
         else:
-            print(f"'{answer}' is wrong answer ;(."
-                  f"Correct answer was '{correct_answer}'."
-                  f"\nLet's try again, {name.title()}!")
-            break
+            print("You must type only 'yes' or 'no' if you want to win."
+                  "\nLet's take another try!")
+            score == 0
         if score == 3:
             print(f"Congratulations, {name.title()}!")
 
 
 def main():
     print(f'Hello, {name.title()}!')
-    print('What is the result of the expression?')
-    calc()
+    print('Answer "yes" if the number is even, otherwise answer "no".')
+    is_even()
 
 
 if __name__ == '__main__':
