@@ -1,54 +1,26 @@
 #!/usr/bin/env python
 
-import prompt
 import operator
-from random import randint
-from random import choice
+from random import randint, choice
 
+TASK_DESCRIPTION = 'What is the result of the exspression?'
+FIRST_NUM = 1
+SECOND_NUM = 10
 
-print("Welcome to the Brain Games!")
-
-
-
-name = get_name()
-
-
-opr = {
+operators = {
     "+": operator.add,
     "-": operator.sub,
     "*": operator.mul,
 }
 
-
-def calc():
-    score = 0
-    while score < 3:
-        number1 = randint(5, 10)
-        number2 = randint(1, 5)
-        x = opr.keys()
-        x = list(x)
-        operator = choice(x)
-        print(f"Question: {number1} {operator} {number2}")
-        result = opr.get(operator)
-        answer = prompt.integer('Your answer: ')
-        correct_answer = (result(number1, number2))
-        if answer == correct_answer:
-            print('Correct!')
-            score += 1
-        else:
-            print(f"'{answer}' is wrong answer ;(."
-                  f"Correct answer was '{correct_answer}'."
-                  f"\nLet's try again, {name.title()}!")
-            break
-        if score == 3:
-            print(f"Congratulations, {name.title()}!")
+operator_symbols = list(operators.keys())
 
 
-def main():
-    print(f'Hello, {name.title()}!')
-    print('What is the result of the expression?')
-    calc()
-
-
-if __name__ == '__main__':
-    main()
+def get_game_round():
+    number1 = randint(FIRST_NUM, SECOND_NUM)
+    number2 = randint(FIRST_NUM, SECOND_NUM)
+    operator = choice(operator_symbols)
+    current_operator = operators.get(operator)
+    question = (str(number1) + ' ' + operator + ' ' + str(number2))
+    correct_answer = (current_operator(number1, number2))
+    return question, str(correct_answer)
